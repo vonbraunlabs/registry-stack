@@ -1,0 +1,5 @@
+.env
+htpasswd
+.secrets/
+.srl
+*.swp

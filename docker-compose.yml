@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+  registry:
+    image: registry:2
+    ports:
+      - "5000:5000"
+    secrets:
+      - domain.crt
+      - domain.key
+    configs:
+      - htpasswd
+    environment:
+      - REGISTRY_HTTP_TLS_CERTIFICATE=/run/secrets/domain.crt
+      - REGISTRY_HTTP_TLS_KEY=/run/secrets/domain.key
+      - REGISTRY_AUTH=htpasswd
+      - REGISTRY_AUTH_HTPASSWD_PATH=/htpasswd
+      - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
+    volumes:
+      - registry-data:/var/lib/registry
+
+volumes:
+  registry-data:
+
+secrets:
+  domain.crt:
+    file: ./.secrets/site.crt
+  domain.key:
+    file: ./.secrets/site.key
+
+configs:
+  htpasswd:
+    file: ./htpasswd
