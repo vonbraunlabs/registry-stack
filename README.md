@@ -69,8 +69,10 @@ Registry-Stack`.
 
 Done.
 
+## Troubleshooting
+
 Note that, if your Docker is using proxy, the login might not work. Disable the
-proxy to be sure, Commend the `HTTP_PROXY` variable on
+proxy to be sure. Comment the `HTTP_PROXY` variable on
 `/etc/systemd/system/docker.service.d/http-proxy.conf`, reload systemd and
 restart Docker:
 
@@ -78,3 +80,12 @@ restart Docker:
 systemctl daemon-reload
 systemctl restart docker
 ```
+
+## Deploying the Stack with Images from Private Registry
+
+On the `docker stack deploy` make sure that:
+
+1. The user running the command is logged in and
+2. Use the `--with-registry-auth` to send the auth details to all nodes on the
+   swarm
+
